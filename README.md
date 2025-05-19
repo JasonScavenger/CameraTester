@@ -1,10 +1,4 @@
-# CameraTester
+# Установка
 
-Ссылка на документацию:
-
-https://docs.google.com/document/d/1YpENCvGWa9eeBJWsodfSVQbPLFPO8jdewIH4s-7KJyI/edit?usp=sharing
-
-В данной таблице собраны данные по камерам:
-
-https://docs.google.com/spreadsheets/d/17yxX-prSVFULPCx3y657XHxPm4NMsxRh5AtvTdvg4Kk/edit?usp=sharing
+<iframe src="https://gmail3208907.autodesk360.com/shares/public/SH286ddQT78850c0d8a491e38186b9366546?mode=embed" width="640" height="480" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"  frameborder="0"></iframe>
 
