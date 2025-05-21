@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace SharpTester
 {
     public partial class Form1 : Form
@@ -8,6 +10,7 @@ namespace SharpTester
         }
 
         Bitmap originalImage;
+        Bitmap black = new Bitmap(32, 32, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -18,16 +21,32 @@ namespace SharpTester
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
-            pictureBox2.Image = ProcessImage(originalImage);
+            pictureBox2.Image = await ProcessImage(originalImage);
             label1.Text = "";
         }
 
-        Bitmap ProcessImage(Bitmap imageToProcess)
+        async Task<Bitmap> ProcessImage(Bitmap imageToProcess)
         {
+            AforgeService service = new AforgeService();
 
-            return null;
+            bool isContains = await service.IsContains(imageToProcess, black);
+
+            if (isContains)
+            {
+                Bitmap copy = new Bitmap(imageToProcess);
+                var g = Graphics.FromImage(copy);
+                foreach (var place in service._matchings)
+                {
+                    g.DrawRectangle(new Pen(Color.Red, 2.0f), place.Rectangle);
+                }
+                return copy;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
