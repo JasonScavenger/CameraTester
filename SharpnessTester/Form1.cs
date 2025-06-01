@@ -48,15 +48,18 @@ namespace TestObjectForm
 
         private List<(double X, double Y)> LoadDataFromFolder(string folderPath)
         {
-            var files = Directory.GetFiles(folderPath, "*.jpg")
-                                 .Where(f => Path.GetFileNameWithoutExtension(f).All(char.IsDigit))
+            var files = Directory.GetFiles(folderPath, "*.JPG")
+                                 //.Where(f => Path.GetFileNameWithoutExtension(f).All(char.IsDigit))
                                  .ToList();
 
             var results = new List<(double X, double Y)>();
 
-            foreach (var file in files)
+            //foreach (var file in files)
+            for (int i = 0; i < files.Count; i++)
             {
-                if (double.TryParse(Path.GetFileNameWithoutExtension(file), out double x))
+                string file = files[i];
+                double x = i;
+                //if (double.TryParse(Path.GetFileNameWithoutExtension(file), out double x))
                 {
                     Mat image = Cv2.ImRead(file, ImreadModes.Color);
                     if (!image.Empty())

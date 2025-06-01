@@ -10,6 +10,46 @@ namespace TestObjectForm
 {
     public class SharpnessMetric
     {
+
+        // Расчёт PSNR
+        public static double CalculatePSNR(Mat matOriginal, Mat matProcessed)
+        {
+            double psnr = Cv2.PSNR(matOriginal, matProcessed);
+            return psnr;
+        }
+        public static double Variance(Mat image)
+        {
+            using (var laplacian = new Mat())
+            {
+                int kernel_size = 3;
+                int scale = 1;
+                int delta = 0;
+                int ddepth = image.Type().Depth;
+                Cv2.Laplacian(image, laplacian, ddepth, kernel_size, scale, delta);
+                Cv2.MeanStdDev(laplacian, out var mean, out var stddev);
+                return stddev.Val0 * stddev.Val0;
+            }
+        }
+
+        public static double VarianceOfLaplacian(Mat image)
+        {
+            using (var laplacian = new Mat())
+            {
+                Cv2.Laplacian(image, laplacian, MatType.CV_64FC1);
+                Cv2.MeanStdDev(laplacian, out var mean, out var stddev);
+                return stddev.Val0 * stddev.Val0;
+            }
+        }
+
+        //public static double CalculateNoise(Mat image)
+        //{
+        //    if (image.Empty())
+        //        throw new ArgumentException("Изображение пустое.");
+        //    Mat outimage = null;
+        //    Cv2.Laplacian(image, outimage, new MatType(1));
+
+        //}
+
         // Возвращает численную оценку резкости изображения
         public static double CalculateSharpness(Mat image)
         {
