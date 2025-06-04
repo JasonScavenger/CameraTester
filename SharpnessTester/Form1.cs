@@ -64,7 +64,7 @@ namespace TestObjectForm
                     Mat image = Cv2.ImRead(file, ImreadModes.Color);
                     if (!image.Empty())
                     {
-                        double sharpness = SharpnessMetric.CalculateSharpness(image);
+                        double sharpness = AllMetrics.CalculateSharpness(image);
                         results.Add((x, sharpness));
                         image.Dispose();
                     }
