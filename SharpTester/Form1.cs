@@ -177,7 +177,51 @@ namespace SharpTester
 
 
             double finalKoeff = psnrKoeff * sharpnessKoeff;
-            textBox1.Text += $"\r\nКоэффициент крутости Трушина: {Math.Round(finalKoeff, 3)}";
+            textBox1.Text += $"\r\nКоэффициент крутости: {Math.Round(finalKoeff, 3)}";
+
+            var focusWB = new Series("Белая снизу")
+            {
+                ChartType = SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Blue
+            };
+            var focusBB = new Series("Черная снизу")
+            {
+                ChartType = SeriesChartType.Line,
+                BorderWidth = 2,
+                Color = Color.Red
+            };
+            double x = 0;
+            double sum = whiteStripesBottom.Sum();
+            double max = whiteStripesBottom.Max();
+            for (int i = 0; i < whiteStripesBottom.Count; i++)
+            {
+                focusWB.Points.AddXY(x / sum * 1000, max - whiteStripesBottom[i]);
+                x += whiteStripesBottom[i];
+            }
+            x = 0;
+            sum = blackStripesBottom.Sum();
+            max = blackStripesBottom.Max();
+            for (int i = 0; i < blackStripesBottom.Count; i++)
+            {
+                focusBB.Points.AddXY(x / sum * 1000, max - blackStripesBottom[i]);
+                x += blackStripesBottom[i];
+            }
+
+            // Анализ яркости по линиям
+            chart2.Series.Clear();
+            chart2.Series.Add(focusWB);
+            chart2.Series.Add(focusBB);
+
+            // Настройки графика
+            chart2.ChartAreas[0].AxisX.Title = "Позиция";
+            chart2.ChartAreas[0].AxisY.Title = "Фокус";
+            chart2.ChartAreas[0].AxisY.Minimum = 0;
+            chart2.ChartAreas[0].AxisY.Maximum = max;
+
+            // Легенда
+            chart2.Legends.Clear();
+            chart2.Legends.Add(new Legend());
         }
 
         async Task<Bitmap> ProcessImage(Bitmap imageToProcess)
@@ -202,8 +246,5 @@ namespace SharpTester
             }
         }
 
-        void AkimMethod(Bitmap original)
-        {
-        }
     }
 }
