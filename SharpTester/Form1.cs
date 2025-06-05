@@ -171,11 +171,24 @@ namespace SharpTester
 
             double psnrKoeff = psnr / 40.0;
             double sharpnessKoeff = sharpness / 900.0;
-            double contrast = (contrastTop + contrastBottom) / 2.0;
-            textBox1.Text += $"\r\nСредняя контрастность: {Math.Round(contrast, 3)}";
+            //double contrast = (contrastTop + contrastBottom) / 2.0;
+            //textBox1.Text += $"\r\nСредняя контрастность: {Math.Round(contrast, 3)}";
 
+            double minBr = 255;
+            double maxBr = 0;
+            for (int X = 0; X < originalImage.Width; X++)
+            {
+                for (int Y = 0; Y < originalImage.Height; Y++)
+                {
+                    var color = originalImage.GetPixel(X, Y);
+                    var val = color.GetBrightness() * 255;
+                    if (val > maxBr) maxBr = val;
+                    if (val < minBr) minBr = val;
+                }
+            }
+            double contrast = maxBr - minBr;
 
-            double finalKoeff = psnrKoeff * sharpnessKoeff;
+            double finalKoeff = psnrKoeff * sharpnessKoeff * (contrast / 255f);
             textBox1.Text += $"\r\nКоэффициент крутости: {Math.Round(finalKoeff, 3)}";
 
             var focusWB = new Series("Белая снизу")

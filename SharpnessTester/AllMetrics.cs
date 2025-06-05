@@ -72,45 +72,38 @@ namespace TestObjectForm
                 }
             }
         }
-
-        public static System.Collections.Generic.List<Rect> DetectColorStrips(Mat src, string color)
+        public static List<Rect> DetectColorStrips(Mat src, string color)
         {
-            // Копируем исходное изображение
             using Mat hsv = new Mat();
-            Cv2.CvtColor(src, hsv, ColorConversionCodes.BGR2HSV); // BGRA2HSV
+            Cv2.CvtColor(src, hsv, ColorConversionCodes.BGR2HSV);
 
-            // Диапазоны цветов HSV
-            Scalar lowerBound, upperBound;
+            using Mat mask = new Mat();
+            using Mat mask1 = new Mat();
+            using Mat mask2 = new Mat();
 
             switch (color.ToLower())
             {
                 case "red":
-                    // Red может быть в двух диапазонах в HSV
-                    var lower1 = new Scalar(0, 100, 100);
-                    var upper1 = new Scalar(10, 255, 255);
-                    var lower2 = new Scalar(160, 100, 100);
-                    var upper2 = new Scalar(180, 255, 255);
-
-                    Mat mask1 = new Mat();
-                    Mat mask2 = new Mat();
-                    Cv2.InRange(hsv, lower1, upper1, mask1);
-                    Cv2.InRange(hsv, lower2, upper2, mask2);
-
-                    Mat redMask = new Mat();
-                    Cv2.BitwiseOr(mask1, mask2, redMask); // ← Исправленная строка
-                    return FindStrips(redMask);
+                    // Красный цвет — два диапазона
+                    Cv2.InRange(hsv, new Scalar(0, 100, 100), new Scalar(10, 255, 255), mask1);
+                    Cv2.InRange(hsv, new Scalar(160, 100, 100), new Scalar(180, 255, 255), mask2);
+                    Cv2.BitwiseOr(mask1, mask2, mask);
+                    break;
 
                 case "green":
-                    lowerBound = new Scalar(40, 40, 40);
-                    upperBound = new Scalar(80, 255, 255);
+                    // Зеленый цвет
+                    Cv2.InRange(hsv, new Scalar(40, 40, 40), new Scalar(90, 255, 255), mask);
                     break;
 
                 default:
                     throw new ArgumentException("Поддерживаемые цвета: red, green");
             }
 
-            using Mat mask = new Mat();
-            Cv2.InRange(hsv, lowerBound, upperBound, mask);
+            // Улучшаем маску морфологическими операциями
+            using Mat kernel = Cv2.GetStructuringElement(MorphShapes.Rect, new OpenCvSharp.Size(5, 5));
+            Cv2.MorphologyEx(mask, mask, MorphTypes.Close, kernel);
+            Cv2.MorphologyEx(mask, mask, MorphTypes.Open, kernel);
+
             return FindStrips(mask);
         }
 
@@ -134,7 +127,7 @@ namespace TestObjectForm
                 double area = Cv2.ContourArea(contour);
 
                 // Фильтруем маленькие области
-                if (area < 1000) continue;
+                if (area < 500) continue;
 
                 // Определяем соотношение сторон
                 double width = rect.Width;
@@ -143,7 +136,7 @@ namespace TestObjectForm
                 double ratio = Math.Max(width / height, height / width); // Чтобы не зависеть от ориентации
 
                 // Проверяем, что соотношение приблизительно 1:10
-                if (ratio >= 9.0 && ratio <= 11.0)
+                if (ratio >= 8.0 && ratio <= 13.0)
                 {
                     rectangles.Add(rect);
                 }
