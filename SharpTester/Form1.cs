@@ -1,7 +1,6 @@
 ﻿using OpenCvSharp;
 using System.Numerics;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Windows.Forms.DataVisualization.Charting;
 using TestObjectForm;
 using Point = OpenCvSharp.Point;
