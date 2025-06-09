@@ -1,6 +1,6 @@
 # CameraTester
 
-Ссылка на документацию:
+Ссылка на документацию, результаты и планы развития:
 
 https://docs.google.com/document/d/1YpENCvGWa9eeBJWsodfSVQbPLFPO8jdewIH4s-7KJyI/edit?usp=sharing
 
