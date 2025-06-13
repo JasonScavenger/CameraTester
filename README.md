@@ -45,7 +45,7 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/yourname/yourrepo.git
+   git clone https://github.com/JasonScavenger/CameraTester.git
    ```
 
 2. Убедитесь, что установлены:
