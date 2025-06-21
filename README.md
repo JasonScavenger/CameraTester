@@ -1,5 +1,3 @@
-# CameraTester
-
 Ссылка на документацию, результаты и планы развития:
 
 https://docs.google.com/document/d/1YpENCvGWa9eeBJWsodfSVQbPLFPO8jdewIH4s-7KJyI/edit?usp=sharing
@@ -8,9 +6,11 @@ https://docs.google.com/document/d/1YpENCvGWa9eeBJWsodfSVQbPLFPO8jdewIH4s-7KJyI/
 
 https://docs.google.com/spreadsheets/d/17yxX-prSVFULPCx3y657XHxPm4NMsxRh5AtvTdvg4Kk/edit?usp=sharing
 
-# <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera%20with%20Flash.png" alt="Camera with Flash" width="40" height="40" /> Анализ качества изображений
 
-### Инструмент для автоматического анализа и визуализации качества изображения на основе анализа цветных полос и вычисления технических метрик.
+
+# # <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Camera%20with%20Flash.png" alt="Camera with Flash" width="40" height="40" /> CameraTester
+
+
 
 ---
 
